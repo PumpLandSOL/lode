@@ -13,7 +13,7 @@
 //   production cost = EMA of ETH burned per LODE mined (the "mining cost" oracle)
 //
 // Entropy is commit-reveal: each round's secret is committed (sha256) at round start and
-// revealed at resolution — anyone can verify no re-rolls. OPEN BETA: balances are a
+// revealed at resolution — anyone can verify no re-rolls. SIMULATED LEDGER: balances are a
 // simulated ledger, no custody, no promised returns. Dependency-free Node.
 'use strict';
 const http = require('http');
@@ -34,7 +34,7 @@ const EMISSION = 1;                                  // +1 LODE per round
 const LODE_MOTHER = 0.2;                             // +0.2 LODE per round → motherlode pool
 const FEE_BPS = 100;                                 // 1% protocol fee
 const VAULT_BPS = 1000;                              // 10% of winnings → vault (fuels bury)
-const SEED_ETH = +(process.env.SEED_ETH || 0.1);     // open-beta ledger seed per wallet
+const SEED_ETH = +(process.env.SEED_ETH || 0.1);     // simulated-ledger seed per wallet
 const MIN_DEPLOY = 0.0001;
 
 const r6 = (x) => Math.round(x * 1e6) / 1e6;
@@ -114,7 +114,7 @@ function deploy(wallet, square, amount) {
   amount = +amount;
   if (!(amount >= MIN_DEPLOY)) return { error: 'minimum deploy is ' + MIN_DEPLOY + ' ETH' };
   const w = W(wallet);
-  if (w.eth < amount) return { error: 'not enough beta ETH (' + r6(w.eth) + ')' };
+  if (w.eth < amount) return { error: 'not enough ETH (' + r6(w.eth) + ')' };
   w.eth = r9(w.eth - amount);
   if (!ROUND.miners[square][wallet]) ROUND.count[square]++;
   ROUND.miners[square][wallet] = r9((ROUND.miners[square][wallet] || 0) + amount);
@@ -295,4 +295,4 @@ server.on('upgrade', (req, socket) => {
 });
 
 newRound();
-server.listen(PORT, () => console.log('LODE board live on :' + PORT + ' — round ' + db.roundId + ' · supply ' + db.supply + '/' + MAX_SUPPLY + ' · open beta, no custody'));
+server.listen(PORT, () => console.log('LODE board live on :' + PORT + ' — round ' + db.roundId + ' · supply ' + db.supply + '/' + MAX_SUPPLY + ' · simulated ledger, no custody'));

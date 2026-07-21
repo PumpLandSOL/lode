@@ -1,9 +1,9 @@
 # LODE ⛏
 
 **Deploy. Mine. Strike the motherlode.** A faithful port of the open-source ORE board
-game design ([regolith-labs/ore](https://github.com/regolith-labs/ore)) to Robinhood Chain.
+game design (regolith-labs/ore) to Robinhood Chain.
 
-**Live:** [lodeminer.xyz](https://lodeminer.xyz)
+**Live:** [lodeminer.xyz](https://lodeminer.xyz) · **X:** [@LodeMonerRH](https://x.com/LodeMonerRH)
 
 - **The board** — 25 squares, one round every 60 seconds. Deploy ETH on a square; a
   commit-reveal RNG picks one winner. Winners take their stake back + the losers' pot
@@ -17,7 +17,7 @@ game design ([regolith-labs/ore](https://github.com/regolith-labs/ore)) to Robin
 
 ## Status
 
-**Open beta.** Balances are a simulated ledger seeded with 0.1 beta ETH per wallet — no
+**Simulated ledger.** Every wallet starts with 0.1 ETH of play balance — no
 deposits, no custody, no promised returns.
 
 ## Run

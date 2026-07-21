@@ -75,7 +75,7 @@ footer{border-top:2px solid var(--ink);padding-top:16px;font-size:12px;color:var
     <h2>ROUND LIFECYCLE</h2>
     <ol>
       <li><strong>Commit.</strong> A new round opens. The server generates a random 32-byte secret and publishes its sha256 hash (the <strong>commitment</strong>) with the round.</li>
-      <li><strong>Mine (60 seconds).</strong> Players deploy beta ETH onto any of the 25 squares. Minimum deploy: <code>0.0001 ETH</code>. You can deploy multiple times, on multiple squares.</li>
+      <li><strong>Mine (60 seconds).</strong> Players deploy ETH onto any of the 25 squares. Minimum deploy: <code>0.0001 ETH</code>. You can deploy multiple times, on multiple squares.</li>
       <li><strong>Strike.</strong> At round end, the secret is revealed and the RNG deterministically picks <strong>one winning square</strong> — a uniform 1-in-25.</li>
       <li><strong>Settle.</strong> Winners are paid, the emission is minted, the vault takes its cut, and the result (including the secret) is published to the history.</li>
       <li><strong>Intermission (15 seconds).</strong> Deploys are blocked, then the next round commits and opens.</li>
@@ -129,13 +129,13 @@ each winner gets: stake back + winnings × (their stake / winning-square stake)<
   </section>
 
   <section>
-    <h2>OPEN BETA</h2>
-    <p>LODE is in <strong>open beta</strong>. Balances are a <strong>simulated ledger</strong>: every wallet is seeded with 0.1 beta ETH on first connect. There are no deposits, no withdrawals, and <strong>no custody of real funds</strong>. Nothing here is a promise of returns — the board is a game of chance with a provably fair random outcome, and losing squares lose their deploy for the round. Connect an EVM wallet (MetaMask, Rabby) or watch any 0x address.</p>
+    <h2>SIMULATED LEDGER</h2>
+    <p>Balances on LODE are a <strong>simulated ledger</strong>: every wallet is seeded with 0.1 ETH of play balance on first connect. There are no deposits, no withdrawals, and <strong>no custody of real funds</strong>. Nothing here is a promise of returns — the board is a game of chance with a provably fair random outcome, and losing squares lose their deploy for the round. Connect an EVM wallet (MetaMask, Rabby) or watch any 0x address.</p>
   </section>
 
   <footer>
-    LODE — a faithful port of the open-source ORE board game design (regolith-labs/ore) to Robinhood Chain. Open beta: simulated ledger, no custody, no promised returns. <a href="/mine">Back to the board &#9654;</a>
-  </footer>
+    LODE — a faithful port of the open-source ORE board game design (regolith-labs/ore) to Robinhood Chain. Simulated ledger — no custody, no promised returns. <a href="/mine">Back to the board &#9654;</a>
+   · <a href="https://x.com/LodeMonerRH" target="_blank" rel="noopener" aria-label="LODE on X" style="display:inline-flex;align-items:center;color:inherit"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a></footer>
 </div>
 </body>
 </html>
