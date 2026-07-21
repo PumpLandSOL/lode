@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LODE — Deploy. Mine. Strike the motherlode.</title>
+<meta name="description" content="LODE — a faithful port of the ORE board-game miner to Robinhood Chain. 25 squares, one winner a minute, provably fair.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6fdf7; --panel:#fff; --ink:#0b2413; --sub:#47664f; --mut:#7d947f;
+  --grn:#00c805; --dk:#008f04; --gold:#f5a623; --red:#ff4d68;
+}
+*{box-sizing:border-box;margin:0;padding:0;border-radius:0}
+html,body{background:var(--bg)}
+body{
+  font-family:'Inter',sans-serif;color:var(--ink);font-size:14px;
+  background-image:
+    repeating-linear-gradient(0deg,rgba(0,200,5,.05) 0 1px,transparent 1px 24px),
+    repeating-linear-gradient(90deg,rgba(0,200,5,.05) 0 1px,transparent 1px 24px);
+}
+.ps{font-family:'Press Start 2P',monospace;line-height:1.6}
+.vt{font-family:'VT323',monospace}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px 60px}
+a{color:var(--dk)}
+.top{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:2px solid var(--ink)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.logo .ps{font-size:16px}
+.nav{display:flex;gap:14px;margin-left:auto}
+.nav a{font-family:'Press Start 2P',monospace;font-size:9px;line-height:1.6;color:var(--sub);text-decoration:none}
+.nav a:hover{color:var(--dk)}
+
+.hero{text-align:center;padding:64px 0 40px}
+.hero h1{font-family:'Press Start 2P',monospace;font-size:42px;line-height:1.3;margin:22px 0 14px;letter-spacing:2px}
+.hero .tag{font-family:'Press Start 2P',monospace;font-size:12px;line-height:2;color:var(--sub);margin-bottom:28px}
+.btn{display:inline-block;font-family:'Press Start 2P',monospace;font-size:13px;line-height:1.6;border:2px solid var(--ink);background:var(--grn);color:#fff;text-decoration:none;padding:16px 26px;box-shadow:6px 6px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:4px 4px 0 var(--ink)}
+.stats{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:44px}
+.stat{background:var(--panel);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:12px 20px;min-width:170px}
+.stat .lab{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--mut);line-height:1.6;margin-bottom:5px}
+.stat .num{font-family:'VT323',monospace;font-size:28px;line-height:1}
+.stat.gold{border-color:var(--gold)}
+.stat.gold .num{color:var(--gold)}
+
+.sect{margin-top:56px}
+.sect h2{font-family:'Press Start 2P',monospace;font-size:15px;line-height:1.7;margin-bottom:18px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.card{background:var(--panel);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:18px}
+.card h3{font-family:'Press Start 2P',monospace;font-size:10px;line-height:1.7;margin-bottom:10px;color:var(--dk)}
+.card h3.gold{color:var(--gold)}
+.card p{font-size:13.5px;line-height:1.75;color:var(--sub)}
+.card .big{font-family:'VT323',monospace;font-size:24px;color:var(--ink);display:block;margin-bottom:6px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.step{background:var(--panel);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:18px}
+.step .n{font-family:'Press Start 2P',monospace;font-size:18px;color:var(--grn);margin-bottom:10px}
+.step h3{font-family:'Press Start 2P',monospace;font-size:9px;line-height:1.7;margin-bottom:8px}
+.step p{font-size:13.5px;line-height:1.75;color:var(--sub)}
+footer{margin-top:64px;border-top:2px solid var(--ink);padding-top:16px;font-size:12px;color:var(--mut);line-height:1.8}
+@media(max-width:640px){.hero h1{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="logo" href="/">
+      <svg width="26" height="26" viewBox="0 0 16 16" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="1" width="8" height="2" fill="#00c805"/><rect x="2" y="2" width="3" height="2" fill="#008f04"/><rect x="11" y="2" width="3" height="2" fill="#008f04"/>
+        <rect x="2" y="4" width="2" height="2" fill="#008f04"/><rect x="12" y="4" width="2" height="2" fill="#008f04"/>
+        <rect x="7" y="3" width="2" height="9" fill="#0b2413"/><rect x="7" y="12" width="2" height="2" fill="#47664f"/>
+        <rect x="11" y="11" width="3" height="3" fill="#f5a623"/><rect x="12" y="10" width="2" height="1" fill="#f5a623"/><rect x="11" y="11" width="1" height="1" fill="#fff" opacity=".6"/>
+      </svg>
+      <span class="ps">LODE</span>
+    </a>
+    <div class="nav"><a href="/mine">MINE</a><a href="/docs">DOCS</a></div>
+  </div>
+
+  <div class="hero">
+    <svg width="96" height="96" viewBox="0 0 16 16" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg">
+      <rect x="4" y="1" width="8" height="2" fill="#00c805"/><rect x="2" y="2" width="3" height="2" fill="#008f04"/><rect x="11" y="2" width="3" height="2" fill="#008f04"/>
+      <rect x="2" y="4" width="2" height="2" fill="#008f04"/><rect x="12" y="4" width="2" height="2" fill="#008f04"/>
+      <rect x="7" y="3" width="2" height="9" fill="#0b2413"/><rect x="7" y="12" width="2" height="2" fill="#47664f"/>
+      <rect x="11" y="11" width="3" height="3" fill="#f5a623"/><rect x="12" y="10" width="2" height="1" fill="#f5a623"/><rect x="11" y="11" width="1" height="1" fill="#fff" opacity=".6"/>
+    </svg>
+    <h1>LODE</h1>
+    <div class="tag">DEPLOY. MINE. STRIKE THE MOTHERLODE.</div>
+    <p style="max-width:620px;margin:0 auto 30px;font-size:15px;line-height:1.8;color:var(--sub)">
+      A faithful port of the open-source ORE board-game miner to Robinhood Chain.
+      25 squares. One round every minute. Provably fair entropy picks one winning square —
+      winners split the pot and the round's $LODE emission.
+    </p>
+    <a class="btn" href="/mine">START MINING &#9654;</a>
+    <div class="stats">
+      <div class="stat"><div class="lab">ROUNDS PLAYED</div><div class="num" id="sRounds">—</div></div>
+      <div class="stat"><div class="lab">ETH DEPLOYED</div><div class="num" id="sDep">—</div></div>
+      <div class="stat"><div class="lab">SUPPLY</div><div class="num" id="sSupply">— / 5,000,000</div></div>
+      <div class="stat gold"><div class="lab">MOTHERLODE POOL</div><div class="num" id="sMother">—</div></div>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>HOW IT WORKS</h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>DEPLOY</h3>
+        <p>Pick any of the 25 squares on the board and deploy beta ETH onto it. The mining window lasts 60 seconds, then a 15-second intermission.</p></div>
+      <div class="step"><div class="n">2</div><h3>ENTROPY STRIKES</h3>
+        <p>At round end, commit-reveal entropy picks one winning square — a uniform 1-in-25. The secret was committed before the round opened, so nobody can re-roll.</p></div>
+      <div class="step"><div class="n">3</div><h3>WINNERS SPLIT THE POT</h3>
+        <p>Miners on the winning square get their stake back plus the losers' pot split pro-rata (minus a 1% fee and a 10% vault cut) — plus the round's $LODE emission. If nobody is on the winning square, the whole pot is vaulted.</p></div>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>THE EMISSION</h2>
+    <div class="cards">
+      <div class="card"><h3>+1 LODE / ROUND</h3><span class="big">1 per round</span>
+        <p>Every resolved round with winners mints exactly one $LODE. A fixed, halving-free drip — no boosts, no multipliers.</p></div>
+      <div class="card"><h3>5,000,000 HARD CAP</h3><span class="big">5M max</span>
+        <p>Emission stops forever at 5,000,000 $LODE. All of it is mined on the board — no premine allocations from the game.</p></div>
+      <div class="card"><h3>SPLIT OR SOLO</h3><span class="big">50 / 50</span>
+        <p>Each round's +1 LODE is either split pro-rata among all winners, or awarded solo to a deployment-weighted top miner — a fair coin decides.</p></div>
+      <div class="card"><h3 class="gold">MOTHERLODE</h3><span class="big">1-in-500</span>
+        <p>+0.2 LODE accrues into the motherlode pool every round. On 1-in-500 odds the entire pool pays out at once, split among that round's winners.</p></div>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>PROVABLY FAIR</h2>
+    <div class="cards">
+      <div class="card"><h3>COMMIT</h3>
+        <p>Before each round opens, the server generates a random secret and publishes its sha256 hash — the commitment — with the round.</p></div>
+      <div class="card"><h3>REVEAL</h3>
+        <p>At resolution the secret is revealed alongside the result. The winning square is derived deterministically from sha256(secret + ':' + roundId).</p></div>
+      <div class="card"><h3>VERIFY</h3>
+        <p>Anyone can check that sha256(secret) equals the pre-published commitment and re-derive the winning square. No re-rolls, no house thumb on the scale. <a href="/docs">Verification steps &#9654;</a></p></div>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>THE VAULT</h2>
+    <div class="cards">
+      <div class="card"><h3>1% FEE + 10% VAULT CUT</h3>
+        <p>Each round takes a 1% protocol fee, and 10% of winners' pot goes to the vault. Empty-square rounds vault the entire pot (minus fee).</p></div>
+      <div class="card"><h3>BUY &amp; BURY</h3>
+        <p>Vaulted ETH fuels buy-and-bury: once $LODE trades, the vault buys $LODE from the market and buries it permanently, shrinking circulating supply.</p></div>
+      <div class="card"><h3>PRODUCTION COST</h3>
+        <p>The board tracks an EMA of ETH spent per $LODE mined — a live production-cost oracle for the token, straight from the game itself.</p></div>
+    </div>
+  </div>
+
+  <footer>
+    LODE is in open beta. Balances are a simulated ledger seeded with 0.1 beta ETH per wallet — no deposits, no custody, and no promised returns. Outcomes are games of chance on a provably fair board. A faithful port of the open-source ORE board game design (regolith-labs/ore) to Robinhood Chain.
+  </footer>
+</div>
+<script>
+'use strict';
+fetch('/api/state').then(function(r){return r.json();}).then(function(s){
+  var f = function(x,d){ return (+x||0).toLocaleString('en-US',{maximumFractionDigits:d==null?2:d}); };
+  document.getElementById('sRounds').textContent = f(s.stats.rounds,0);
+  document.getElementById('sDep').textContent = f(s.stats.deployedEth,2)+' ETH';
+  document.getElementById('sSupply').textContent = f(s.treasury.supply,0)+' / 5,000,000';
+  document.getElementById('sMother').textContent = f(s.treasury.motherlode,2)+' LODE';
+}).catch(function(){});
+</script>
+</body>
+</html>

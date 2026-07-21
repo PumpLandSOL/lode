@@ -1,0 +1,8 @@
+{
+  "name": "lode",
+  "version": "1.0.0",
+  "description": "LODE — deploy, mine, strike the motherlode. The ORE board game on Robinhood Chain.",
+  "main": "server/index.js",
+  "scripts": { "start": "node server/index.js" },
+  "engines": { "node": ">=18" }
+}

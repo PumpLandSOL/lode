@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LODE — Docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6fdf7; --panel:#fff; --ink:#0b2413; --sub:#47664f; --mut:#7d947f;
+  --grn:#00c805; --dk:#008f04; --gold:#f5a623; --red:#ff4d68;
+}
+*{box-sizing:border-box;margin:0;padding:0;border-radius:0}
+html,body{background:var(--bg)}
+body{
+  font-family:'Inter',sans-serif;color:var(--ink);font-size:14px;
+  background-image:
+    repeating-linear-gradient(0deg,rgba(0,200,5,.05) 0 1px,transparent 1px 24px),
+    repeating-linear-gradient(90deg,rgba(0,200,5,.05) 0 1px,transparent 1px 24px);
+}
+.ps{font-family:'Press Start 2P',monospace;line-height:1.6}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
+a{color:var(--dk)}
+.top{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:2px solid var(--ink);margin-bottom:28px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.logo .ps{font-size:16px}
+.nav{display:flex;gap:14px;margin-left:auto}
+.nav a{font-family:'Press Start 2P',monospace;font-size:9px;line-height:1.6;color:var(--sub);text-decoration:none}
+.nav a:hover{color:var(--dk)}
+h1{font-family:'Press Start 2P',monospace;font-size:20px;line-height:1.6;margin-bottom:8px}
+.sub{color:var(--sub);font-size:14px;line-height:1.8;margin-bottom:30px}
+section{background:var(--panel);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:22px;margin-bottom:26px}
+h2{font-family:'Press Start 2P',monospace;font-size:12px;line-height:1.7;margin-bottom:14px;color:var(--dk)}
+h2.gold{color:var(--gold)}
+p,li{font-size:14px;line-height:1.85;color:var(--sub)}
+p+p{margin-top:10px}
+ul,ol{margin:10px 0 0 20px}
+li+li{margin-top:6px}
+strong{color:var(--ink)}
+code,.mono{font-family:'VT323',monospace;font-size:17px;color:var(--ink);background:var(--bg);border:1px solid #cfe6d2;padding:0 4px;word-break:break-all}
+pre{font-family:'VT323',monospace;font-size:17px;line-height:1.5;background:var(--bg);border:2px solid var(--ink);padding:12px 14px;overflow-x:auto;margin-top:10px;color:var(--ink)}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th{font-family:'Press Start 2P',monospace;font-size:7px;line-height:1.6;color:var(--mut);text-align:left;padding:6px 8px;border-bottom:2px solid var(--ink)}
+td{padding:6px 8px;font-size:13.5px;color:var(--sub);border-bottom:1px dashed #d3e6d6}
+td.n{font-family:'VT323',monospace;font-size:18px;color:var(--ink)}
+footer{border-top:2px solid var(--ink);padding-top:16px;font-size:12px;color:var(--mut);line-height:1.8}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="logo" href="/">
+      <svg width="26" height="26" viewBox="0 0 16 16" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="1" width="8" height="2" fill="#00c805"/><rect x="2" y="2" width="3" height="2" fill="#008f04"/><rect x="11" y="2" width="3" height="2" fill="#008f04"/>
+        <rect x="2" y="4" width="2" height="2" fill="#008f04"/><rect x="12" y="4" width="2" height="2" fill="#008f04"/>
+        <rect x="7" y="3" width="2" height="9" fill="#0b2413"/><rect x="7" y="12" width="2" height="2" fill="#47664f"/>
+        <rect x="11" y="11" width="3" height="3" fill="#f5a623"/><rect x="12" y="10" width="2" height="1" fill="#f5a623"/><rect x="11" y="11" width="1" height="1" fill="#fff" opacity=".6"/>
+      </svg>
+      <span class="ps">LODE</span>
+    </a>
+    <div class="nav"><a href="/mine">MINE</a><a href="/docs">DOCS</a></div>
+  </div>
+
+  <h1>DOCS</h1>
+  <p class="sub">The full mechanics of the LODE board — exact math, entropy verification, and where the ETH goes.</p>
+
+  <section>
+    <h2>ORIGIN</h2>
+    <p>LODE is a <strong>faithful port of the open-source ORE board game design to Robinhood Chain</strong>. The mechanics — the 25-square board, one winning square per round, winners splitting the losers' pot plus a fixed emission, the motherlode jackpot, and the vault — follow the design published by <strong>regolith-labs/ore</strong> (ore.com). Credit for the game design belongs to Regolith Labs; LODE re-implements it for Robinhood Chain with ETH as the deploy asset and $LODE as the mined token.</p>
+  </section>
+
+  <section>
+    <h2>ROUND LIFECYCLE</h2>
+    <ol>
+      <li><strong>Commit.</strong> A new round opens. The server generates a random 32-byte secret and publishes its sha256 hash (the <strong>commitment</strong>) with the round.</li>
+      <li><strong>Mine (60 seconds).</strong> Players deploy beta ETH onto any of the 25 squares. Minimum deploy: <code>0.0001 ETH</code>. You can deploy multiple times, on multiple squares.</li>
+      <li><strong>Strike.</strong> At round end, the secret is revealed and the RNG deterministically picks <strong>one winning square</strong> — a uniform 1-in-25.</li>
+      <li><strong>Settle.</strong> Winners are paid, the emission is minted, the vault takes its cut, and the result (including the secret) is published to the history.</li>
+      <li><strong>Intermission (15 seconds).</strong> Deploys are blocked, then the next round commits and opens.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>EXACT MATH</h2>
+    <table>
+      <tr><th>PARAMETER</th><th>VALUE</th><th>MEANING</th></tr>
+      <tr><td>Board</td><td class="n">5 × 5</td><td>25 squares, one uniform winner per round</td></tr>
+      <tr><td>Round / intermission</td><td class="n">60s / 15s</td><td>mining window, then a break</td></tr>
+      <tr><td>Protocol fee</td><td class="n">100 bps (1%)</td><td>taken from the pot each round</td></tr>
+      <tr><td>Vault cut</td><td class="n">1000 bps (10%)</td><td>of winners' winnings, fuels buy &amp; bury</td></tr>
+      <tr><td>Emission</td><td class="n">+1 LODE / round</td><td>fixed, halving-free drip</td></tr>
+      <tr><td>Hard cap</td><td class="n">5,000,000</td><td>emission stops forever at the cap</td></tr>
+      <tr><td>Motherlode accrual</td><td class="n">+0.2 LODE / round</td><td>into the jackpot pool (counts toward the cap)</td></tr>
+      <tr><td>Motherlode odds</td><td class="n">1-in-500</td><td>whole pool pays, split among that round's winners</td></tr>
+      <tr><td>Min deploy</td><td class="n">0.0001 ETH</td><td>per deploy</td></tr>
+    </table>
+    <p style="margin-top:14px"><strong>When the winning square has miners:</strong></p>
+    <pre>winnings = (pot − winningSquareStake)   // the losers' pot
+winnings −= winnings × 1%               // protocol fee
+winnings −= winnings × 10%              // vault cut → buy &amp; bury
+each winner gets: stake back + winnings × (their stake / winning-square stake)</pre>
+    <p><strong>The +1 LODE emission</strong> is decided by a fair coin from the same entropy: 50% it is <strong>split pro-rata</strong> among all winners on the square; 50% it goes <strong>solo</strong> to one <strong>deployment-weighted top miner</strong> (bigger stake = proportionally better odds of being picked). A motherlode payout, when it hits, always splits pro-rata among the round's winners.</p>
+    <p><strong>When nobody is on the winning square:</strong> the entire pot (minus the 1% fee) is vaulted, and no $LODE is emitted that round.</p>
+  </section>
+
+  <section>
+    <h2>PROVABLY FAIR — VERIFY IT YOURSELF</h2>
+    <p>Every round's entropy is <strong>commit-reveal</strong>: the secret is fixed before anyone deploys, so the outcome cannot be re-rolled based on where the ETH lands.</p>
+    <ol>
+      <li>Before the round, note the published <code>commitment</code> (shown on the board and in <code>/api/state</code>).</li>
+      <li>At resolution, the <code>secret</code> is revealed in the round's history record.</li>
+      <li>Check the commitment: <code>sha256(secret) == commitment</code>.</li>
+      <li>Re-derive the result: compute <code>rng = sha256(secret + ':' + roundId)</code>. The winning square is derived from that digest — <code>winning = rng % 25</code> — and the same digest drives the motherlode roll (<code>1-in-500</code>) and the split-vs-solo coin.</li>
+    </ol>
+    <p>If step 3 or 4 ever failed to match a published result, the round would be provably rigged. It can't silently be — that's the point.</p>
+  </section>
+
+  <section>
+    <h2 class="gold">THE MOTHERLODE</h2>
+    <p>Each resolved round with winners adds <strong>+0.2 LODE</strong> to the motherlode pool (this accrual counts toward the 5,000,000 cap). Every round also rolls 1-in-500 odds from the round's entropy — when it hits, the <strong>entire pool pays out at once</strong>, split pro-rata among the miners on that round's winning square. The pool then resets and starts accruing again.</p>
+  </section>
+
+  <section>
+    <h2>TREASURY, VAULT &amp; BUY-AND-BURY</h2>
+    <p>Two flows feed the treasury every round: the <strong>1% protocol fee</strong> and the <strong>10% vault cut</strong> of winners' winnings (or the whole pot, on empty-square rounds). Vaulted ETH exists for one purpose: <strong>buy &amp; bury</strong> — once $LODE trades, the vault buys $LODE from the open market and buries it permanently, removing it from circulation.</p>
+    <p>The board also tracks a <strong>production cost EMA</strong>: a moving average of ETH consumed per $LODE mined. It is a transparency metric — the live "mining cost" of the token — not a price target or a promise of value.</p>
+  </section>
+
+  <section>
+    <h2>OPEN BETA</h2>
+    <p>LODE is in <strong>open beta</strong>. Balances are a <strong>simulated ledger</strong>: every wallet is seeded with 0.1 beta ETH on first connect. There are no deposits, no withdrawals, and <strong>no custody of real funds</strong>. Nothing here is a promise of returns — the board is a game of chance with a provably fair random outcome, and losing squares lose their deploy for the round. Connect an EVM wallet (MetaMask, Rabby) or watch any 0x address.</p>
+  </section>
+
+  <footer>
+    LODE — a faithful port of the open-source ORE board game design (regolith-labs/ore) to Robinhood Chain. Open beta: simulated ledger, no custody, no promised returns. <a href="/mine">Back to the board &#9654;</a>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LODE — Mine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6fdf7; --panel:#fff; --ink:#0b2413; --sub:#47664f; --mut:#7d947f;
+  --grn:#00c805; --dk:#008f04; --gold:#f5a623; --red:#ff4d68;
+}
+*{box-sizing:border-box;margin:0;padding:0;border-radius:0}
+html,body{background:var(--bg)}
+body{
+  font-family:'Inter',sans-serif;color:var(--ink);font-size:14px;
+  background-image:
+    repeating-linear-gradient(0deg,rgba(0,200,5,.05) 0 1px,transparent 1px 24px),
+    repeating-linear-gradient(90deg,rgba(0,200,5,.05) 0 1px,transparent 1px 24px);
+  min-height:100vh;
+}
+a{color:var(--dk)}
+.ps{font-family:'Press Start 2P',monospace;line-height:1.6}
+.vt{font-family:'VT323',monospace}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px 60px}
+
+/* top bar */
+.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 0;border-bottom:2px solid var(--ink);margin-bottom:16px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.logo .ps{font-size:16px}
+.nav{display:flex;gap:14px;margin-left:6px}
+.nav a{font-family:'Press Start 2P',monospace;font-size:9px;line-height:1.6;color:var(--sub);text-decoration:none}
+.nav a:hover{color:var(--dk)}
+.spacer{flex:1}
+.bal{background:var(--panel);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:5px 10px;display:flex;gap:8px;align-items:baseline}
+.bal .lab{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--mut);line-height:1.6}
+.bal .num{font-family:'VT323',monospace;font-size:20px}
+button{font-family:'Press Start 2P',monospace;font-size:10px;line-height:1.6;border:2px solid var(--ink);background:var(--panel);color:var(--ink);padding:9px 14px;cursor:pointer;box-shadow:4px 4px 0 var(--ink)}
+button:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+button.pri{background:var(--grn);color:#fff}
+button:disabled{opacity:.5;cursor:not-allowed}
+
+/* round header */
+.roundbar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.stat{background:var(--panel);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:10px 14px;flex:1;min-width:130px}
+.stat .lab{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--mut);line-height:1.6;margin-bottom:4px}
+.stat .num{font-family:'VT323',monospace;font-size:26px;line-height:1}
+.stat.count .num{font-size:34px;color:var(--dk)}
+.stat.gold{border-color:var(--gold)}
+.stat.gold .num{color:var(--gold)}
+.stat.gold .lab{color:var(--gold)}
+
+/* layout */
+.main{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px}
+@media(max-width:920px){.main{grid-template-columns:1fr}}
+
+/* board */
+.boardcard{background:var(--panel);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:14px}
+.board{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.sq{aspect-ratio:1/1;background:var(--bg);border:2px solid var(--ink);cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:background .1s}
+.sq:hover{background:#e6fae8}
+.sq .eth{font-family:'VT323',monospace;font-size:21px;line-height:1}
+.sq .cnt{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--mut);line-height:1.6}
+.sq .idx{position:absolute;top:3px;left:5px;font-family:'Press Start 2P',monospace;font-size:6px;color:var(--mut)}
+.sq.sel{background:var(--grn)}
+.sq.sel .eth,.sq.sel .cnt,.sq.sel .idx{color:#fff}
+.sq.mine::after{content:"";position:absolute;right:4px;top:4px;width:8px;height:8px;background:var(--gold);border:1px solid var(--ink)}
+.sq.win{animation:winflash .35s steps(2) 6;background:var(--grn)}
+.sq.win .eth,.sq.win .cnt,.sq.win .idx{color:#fff}
+.sq.winlode{animation:goldflash .35s steps(2) 8;background:var(--gold)}
+@keyframes winflash{0%{background:var(--panel)}100%{background:var(--grn)}}
+@keyframes goldflash{0%{background:var(--panel)}100%{background:var(--gold)}}
+
+/* deploy panel */
+.deploy{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px;padding-top:14px;border-top:2px solid var(--ink)}
+.deploy .picked{font-family:'Press Start 2P',monospace;font-size:9px;line-height:1.6}
+input[type=text]{font-family:'VT323',monospace;font-size:22px;border:2px solid var(--ink);padding:6px 10px;width:130px;background:var(--panel);color:var(--ink)}
+input[type=text]:focus{outline:none;border-color:var(--dk)}
+.chip{font-size:8px;padding:7px 9px}
+.msg{font-family:'Press Start 2P',monospace;font-size:8px;line-height:1.8;margin-top:10px;min-height:15px}
+.msg.err{color:var(--red)}
+.msg.ok{color:var(--dk)}
+
+/* result banner */
+.banner{display:none;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:12px 14px;margin-bottom:16px;background:var(--panel)}
+.banner.show{display:block}
+.banner.grn{background:#e6fae8}
+.banner.gold{background:#fdf2dc;border-color:var(--gold)}
+.banner h3{font-family:'Press Start 2P',monospace;font-size:11px;line-height:1.7;margin-bottom:6px}
+.banner p{font-size:13px;color:var(--sub)}
+.banner .secret{font-family:'VT323',monospace;font-size:15px;word-break:break-all;color:var(--mut);margin-top:6px}
+
+/* side panels */
+.panel{background:var(--panel);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:12px 14px;margin-bottom:18px}
+.panel h2{font-family:'Press Start 2P',monospace;font-size:10px;line-height:1.7;margin-bottom:10px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+.row{display:flex;justify-content:space-between;align-items:baseline;padding:3px 0}
+.row .k{font-size:12px;color:var(--sub)}
+.row .v{font-family:'VT323',monospace;font-size:19px}
+.row .v.gold{color:var(--gold)}
+table{width:100%;border-collapse:collapse}
+td,th{padding:4px 2px;text-align:left}
+th{font-family:'Press Start 2P',monospace;font-size:6px;color:var(--mut);line-height:1.6}
+td{font-family:'VT323',monospace;font-size:17px}
+td.w{font-size:15px;color:var(--sub)}
+tr+tr td{border-top:1px dashed #d3e6d6}
+
+/* recent rounds strip */
+.strip{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}
+.rr{background:var(--panel);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:8px;min-width:96px;flex:0 0 auto}
+.rr .id{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--mut);line-height:1.6;margin-bottom:4px}
+.mini{display:grid;grid-template-columns:repeat(5,7px);gap:2px;margin-bottom:5px}
+.mini i{width:7px;height:7px;background:#dcefde;display:block}
+.mini i.w{background:var(--grn)}
+.mini i.g{background:var(--gold)}
+.rr .pot{font-family:'VT323',monospace;font-size:17px;line-height:1.1}
+.rr .win{font-size:11px;color:var(--mut)}
+h2.sect{font-family:'Press Start 2P',monospace;font-size:10px;line-height:1.7;margin:22px 0 10px}
+footer{margin-top:36px;border-top:2px solid var(--ink);padding-top:14px;font-size:12px;color:var(--mut);line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="logo" href="/">
+      <svg id="mark" width="26" height="26" viewBox="0 0 16 16" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="1" width="8" height="2" fill="#00c805"/><rect x="2" y="2" width="3" height="2" fill="#008f04"/><rect x="11" y="2" width="3" height="2" fill="#008f04"/>
+        <rect x="2" y="4" width="2" height="2" fill="#008f04"/><rect x="12" y="4" width="2" height="2" fill="#008f04"/>
+        <rect x="7" y="3" width="2" height="9" fill="#0b2413"/><rect x="7" y="12" width="2" height="2" fill="#47664f"/>
+        <rect x="11" y="11" width="3" height="3" fill="#f5a623"/><rect x="12" y="10" width="2" height="1" fill="#f5a623"/><rect x="11" y="11" width="1" height="1" fill="#fff" opacity=".6"/>
+      </svg>
+      <span class="ps">LODE</span>
+    </a>
+    <div class="nav"><a href="/mine">MINE</a><a href="/docs">DOCS</a></div>
+    <div class="spacer"></div>
+    <div class="bal"><span class="lab">BETA ETH</span><span class="num" id="balEth">—</span></div>
+    <div class="bal"><span class="lab">$LODE</span><span class="num" id="balLode">—</span></div>
+    <button id="connect">CONNECT WALLET</button>
+  </div>
+
+  <div class="roundbar">
+    <div class="stat"><div class="lab">ROUND</div><div class="num" id="roundId">—</div></div>
+    <div class="stat count"><div class="lab">NEXT STRIKE IN</div><div class="num" id="countdown">—</div></div>
+    <div class="stat"><div class="lab">TOTAL DEPLOYED</div><div class="num"><span id="totalDep">0</span> ETH</div></div>
+    <div class="stat"><div class="lab">MINERS</div><div class="num" id="minersN">0</div></div>
+    <div class="stat gold"><div class="lab">MOTHERLODE</div><div class="num"><span id="mother">0</span> LODE</div></div>
+    <div class="stat"><div class="lab">SUPPLY</div><div class="num" id="supply">0 / 5,000,000</div></div>
+  </div>
+
+  <div class="banner" id="banner">
+    <h3 id="banTitle"></h3>
+    <p id="banBody"></p>
+    <div class="secret" id="banSecret"></div>
+  </div>
+
+  <div class="main">
+    <div>
+      <div class="boardcard">
+        <div class="board" id="board"></div>
+        <div class="deploy">
+          <span class="picked" id="picked">PICK A SQUARE</span>
+          <input type="text" id="amt" value="0.001" inputmode="decimal">
+          <button class="chip" data-a="0.001">0.001</button>
+          <button class="chip" data-a="0.005">0.005</button>
+          <button class="chip" data-a="0.01">0.01</button>
+          <button class="pri" id="deployBtn">DEPLOY &#9654;</button>
+        </div>
+        <div class="msg" id="msg"></div>
+      </div>
+
+      <h2 class="sect">RECENT ROUNDS</h2>
+      <div class="strip" id="strip"></div>
+    </div>
+
+    <div>
+      <div class="panel">
+        <h2>LEADERBOARD</h2>
+        <table><thead><tr><th>MINER</th><th>$LODE</th><th>WON ETH</th></tr></thead><tbody id="lb"></tbody></table>
+      </div>
+      <div class="panel">
+        <h2>TREASURY</h2>
+        <div class="row"><span class="k">Vault (fuels buy &amp; bury)</span><span class="v" id="tVault">0 ETH</span></div>
+        <div class="row"><span class="k">Protocol fees</span><span class="v" id="tFee">0 ETH</span></div>
+        <div class="row"><span class="k">$LODE buried</span><span class="v" id="tBuried">0</span></div>
+        <div class="row"><span class="k">Production cost (EMA)</span><span class="v" id="tCost">— ETH/LODE</span></div>
+        <div class="row" id="rowPrice" style="display:none"><span class="k">$LODE price</span><span class="v" id="tPrice"></span></div>
+        <div class="row" id="rowMcap" style="display:none"><span class="k">Market cap</span><span class="v" id="tMcap"></span></div>
+      </div>
+      <div class="panel">
+        <h2>PROVABLY FAIR</h2>
+        <p style="font-size:12px;color:var(--sub);line-height:1.7">Each round's RNG secret is committed (sha256) before mining opens and revealed at resolution. Current commitment:</p>
+        <div class="secret vt" id="commit" style="font-size:14px;word-break:break-all;color:var(--mut);margin-top:6px">—</div>
+        <p style="font-size:11px;color:var(--mut);margin-top:6px">Verify: sha256(secret) == commitment. <a href="/docs">How &#9654;</a></p>
+      </div>
+    </div>
+  </div>
+
+  <footer>LODE is in open beta. Balances are a simulated ledger seeded with 0.1 beta ETH per wallet — no deposits, no custody, no promised returns. A faithful port of the open-source ORE board game design (regolith-labs/ore) to Robinhood Chain.</footer>
+</div>
+
+<script>
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+var fmt = function(x,d){ return (+x||0).toLocaleString('en-US',{maximumFractionDigits:d==null?4:d}); };
+var CFG = null, ROUND = null, RESOLVING = false, SEL = -1, WALLET = localStorage.getItem('lode_w') || '', ACC = null;
+var TREAS = null, HIST = [];
+
+/* board build */
+var board = $('board'), sqEls = [];
+for (var i=0;i<25;i++){
+  var d = document.createElement('div');
+  d.className = 'sq'; d.dataset.i = i;
+  d.innerHTML = '<span class="idx">'+i+'</span><span class="eth">0</span><span class="cnt">0 MINERS</span>';
+  (function(idx,el){ el.onclick = function(){ SEL = idx; $('picked').textContent = 'SQUARE '+idx; renderBoard(); }; })(i,d);
+  board.appendChild(d); sqEls.push(d);
+}
+function renderBoard(){
+  var dep = ROUND ? ROUND.deployed : Array(25).fill(0);
+  var cnt = ROUND ? ROUND.count : Array(25).fill(0);
+  var mine = ACC ? ACC.inRound : null;
+  for (var i=0;i<25;i++){
+    var el = sqEls[i];
+    el.querySelector('.eth').textContent = dep[i] ? fmt(dep[i]) : '0';
+    el.querySelector('.cnt').textContent = cnt[i] + (cnt[i]===1?' MINER':' MINERS');
+    el.classList.toggle('sel', i===SEL);
+    el.classList.toggle('mine', !!(mine && mine[i] > 0));
+  }
+}
+renderBoard();
+
+/* wallet */
+function setWallet(w){
+  WALLET = w; localStorage.setItem('lode_w', w);
+  $('connect').textContent = w.slice(0,6)+'…'+w.slice(-4);
+  refreshAccount();
+}
+$('connect').onclick = function(){
+  if (window.ethereum) {
+    window.ethereum.request({method:'eth_requestAccounts'}).then(function(a){
+      if (a && a[0]) setWallet(a[0]);
+    }).catch(function(){});
+  } else {
+    var w = prompt('No EVM wallet found. Paste a 0x address to watch:');
+    if (w && /^0x[a-fA-F0-9]{40}$/.test(w)) setWallet(w);
+  }
+};
+function refreshAccount(){
+  if (!WALLET) return;
+  fetch('/api/account',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({wallet:WALLET})})
+    .then(function(r){return r.json();}).then(function(a){
+      if (a.wallet){ ACC = a; $('balEth').textContent = fmt(a.eth,6); $('balLode').textContent = fmt(a.lode,4); renderBoard(); }
+    }).catch(function(){});
+}
+
+/* deploy */
+document.querySelectorAll('.chip').forEach(function(b){ b.onclick = function(){ $('amt').value = b.dataset.a; }; });
+$('deployBtn').onclick = function(){
+  var m = $('msg'); m.className = 'msg';
+  if (!WALLET){ m.className='msg err'; m.textContent='CONNECT A WALLET FIRST'; return; }
+  if (SEL < 0){ m.className='msg err'; m.textContent='PICK A SQUARE FIRST'; return; }
+  var amt = parseFloat($('amt').value);
+  if (!(amt > 0)){ m.className='msg err'; m.textContent='ENTER AN AMOUNT'; return; }
+  fetch('/api/deploy',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({wallet:WALLET,square:SEL,amount:amt})})
+    .then(function(r){return r.json();}).then(function(r){
+      if (r.error){ m.className='msg err'; m.textContent=r.error.toUpperCase(); return; }
+      m.className='msg ok'; m.textContent='DEPLOYED '+amt+' ETH ON SQUARE '+r.square;
+      if (r.account){ ACC = r.account; $('balEth').textContent = fmt(ACC.eth,6); $('balLode').textContent = fmt(ACC.lode,4); }
+      renderBoard();
+    }).catch(function(){ m.className='msg err'; m.textContent='NETWORK ERROR'; });
+};
+
+/* state render */
+function applyRound(r){
+  ROUND = r; RESOLVING = !r;
+  if (r){
+    $('roundId').textContent = '#'+r.id;
+    $('totalDep').textContent = fmt(r.totalDeployed);
+    $('minersN').textContent = r.miners;
+    $('mother').textContent = fmt(r.motherlode,2);
+    $('supply').textContent = fmt(r.supply,0)+' / 5,000,000';
+    $('commit').textContent = r.commitment;
+  }
+  renderBoard();
+}
+function applyTreasury(t){
+  if (!t) return; TREAS = t;
+  $('tVault').textContent = fmt(t.vaultEth,4)+' ETH';
+  $('tFee').textContent = fmt(t.feeEth,4)+' ETH';
+  $('tBuried').textContent = fmt(t.buried,2);
+  $('tCost').textContent = (t.costEma ? fmt(t.costEma,6) : '—')+' ETH/LODE';
+  $('mother').textContent = fmt(t.motherlode,2);
+  $('supply').textContent = fmt(t.supply,0)+' / 5,000,000';
+  if (t.priceUsd){ $('rowPrice').style.display='flex'; $('tPrice').textContent = '$'+fmt(t.priceUsd,6); }
+  if (t.mcap){ $('rowMcap').style.display='flex'; $('tMcap').textContent = '$'+fmt(t.mcap,0); }
+}
+function renderStrip(){
+  var h = HIST.slice(0,8), out = '';
+  h.forEach(function(r){
+    var dots = '';
+    for (var i=0;i<25;i++) dots += '<i class="'+(i===r.winning?(r.motherlode>0?'g':'w'):'')+'"></i>';
+    out += '<div class="rr"><div class="id">R#'+r.id+'</div><div class="mini">'+dots+'</div>'
+        + '<div class="pot">'+fmt(r.totalDeployed)+' ETH</div>'
+        + '<div class="win">'+r.winners+' winner'+(r.winners===1?'':'s')+'</div></div>';
+  });
+  $('strip').innerHTML = out || '<div style="font-size:12px;color:var(--mut)">No rounds resolved yet.</div>';
+}
+function renderLb(lb){
+  var out = '';
+  (lb||[]).forEach(function(e){
+    out += '<tr><td class="w">'+e.wallet+'</td><td>'+fmt(e.lode,3)+'</td><td>'+fmt(e.wonEth)+'</td></tr>';
+  });
+  $('lb').innerHTML = out || '<tr><td class="w" colspan="3">Mine a round to get on the board.</td></tr>';
+}
+function pollState(){
+  fetch('/api/state').then(function(r){return r.json();}).then(function(s){
+    applyRound(s.round); RESOLVING = s.resolving;
+    applyTreasury(s.treasury);
+    HIST = s.history || []; renderStrip(); renderLb(s.leaderboard);
+  }).catch(function(){});
+}
+
+/* countdown */
+setInterval(function(){
+  var el = $('countdown');
+  if (RESOLVING || !ROUND){ el.textContent = 'STRIKING…'; return; }
+  var ms = ROUND.endsAt - Date.now();
+  if (ms <= 0){ el.textContent = 'STRIKING…'; return; }
+  var s = Math.floor(ms/1000);
+  el.textContent = Math.floor(s/60)+':' + String(s%60).padStart(2,'0') + '.' + Math.floor((ms%1000)/100);
+}, 250);
+
+/* resolve handling */
+function onResolve(res){
+  RESOLVING = true;
+  var gold = res.motherlode > 0;
+  var el = sqEls[res.winning];
+  el.classList.remove('win','winlode'); void el.offsetWidth;
+  el.classList.add(gold ? 'winlode' : 'win');
+  var b = $('banner');
+  b.className = 'banner show ' + (gold ? 'gold' : 'grn');
+  if (res.winners > 0){
+    $('banTitle').textContent = (gold ? '✦ MOTHERLODE! ' : '') + 'SQUARE '+res.winning+' STRIKES — '+res.winners+' WINNER'+(res.winners===1?'':'S');
+    $('banBody').textContent = fmt(res.winningsEth)+' ETH split pro-rata + '
+      + (res.split ? '+1 LODE split among winners' : '+1 LODE solo to top miner '+(res.topMiner||''))
+      + (gold ? ' + '+fmt(res.motherlode,2)+' LODE motherlode paid out!' : '')
+      + ' · '+fmt(res.vaultedEth)+' ETH to the vault.';
+  } else {
+    $('banTitle').textContent = 'SQUARE '+res.winning+' STRIKES — NOBODY HOME';
+    $('banBody').textContent = 'No miner on the winning square. '+fmt(res.vaultedEth)+' ETH vaulted for buy & bury.';
+  }
+  $('banSecret').textContent = 'secret revealed: '+res.secret+' — verify: sha256(secret) == '+res.commitment.slice(0,16)+'…';
+  HIST.unshift(res); renderStrip();
+  refreshAccount();
+  setTimeout(function(){ el.classList.remove('win','winlode'); }, 4000);
+  setTimeout(function(){ b.className = 'banner'; }, 14000);
+}
+
+/* websocket */
+function connectWS(){
+  var ws;
+  try { ws = new WebSocket((location.protocol==='https:'?'wss://':'ws://')+location.host); } catch(e){ return; }
+  ws.onmessage = function(ev){
+    var m; try { m = JSON.parse(ev.data); } catch(e){ return; }
+    if (m.type === 'hello'){ if (m.round) applyRound(m.round); applyTreasury(m.treasury); }
+    else if (m.type === 'round'){ SEL = -1; $('picked').textContent='PICK A SQUARE'; $('msg').textContent=''; applyRound(m.round); refreshAccount(); }
+    else if (m.type === 'deploy'){ if (ROUND){ ROUND.deployed = m.deployed; ROUND.count = m.count; ROUND.totalDeployed = m.deployed.reduce(function(a,b){return a+b;},0); $('totalDep').textContent = fmt(ROUND.totalDeployed); renderBoard(); } }
+    else if (m.type === 'resolve'){ onResolve(m.result); applyTreasury(m.treasury); }
+  };
+  ws.onclose = function(){ setTimeout(connectWS, 3000); };
+}
+
+fetch('/api/config').then(function(r){return r.json();}).then(function(c){ CFG = c; });
+pollState(); setInterval(pollState, 5000);
+connectWS();
+if (WALLET) setWallet(WALLET);
+</script>
+</body>
+</html>
