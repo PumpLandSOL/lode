@@ -9,16 +9,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f6fdf7; --panel:#fff; --ink:#0b2413; --sub:#47664f; --mut:#7d947f;
-  --grn:#00c805; --dk:#008f04; --gold:#f5a623; --red:#ff4d68;
+  --bg:#0a0f0c; --panel:#121a14; --ink:#e9f7ec; --sub:#a6c4ad; --mut:#6f8a75;
+  --grn:#00c805; --dk:#3ae57e; --gold:#f5a623; --red:#ff4d68;
 }
 *{box-sizing:border-box;margin:0;padding:0;border-radius:0}
 html,body{background:var(--bg)}
 body{
   font-family:'Inter',sans-serif;color:var(--ink);font-size:14px;
   background-image:
-    repeating-linear-gradient(0deg,rgba(0,200,5,.05) 0 1px,transparent 1px 24px),
-    repeating-linear-gradient(90deg,rgba(0,200,5,.05) 0 1px,transparent 1px 24px);
+    repeating-linear-gradient(0deg,rgba(0,200,5,.08) 0 1px,transparent 1px 24px),
+    repeating-linear-gradient(90deg,rgba(0,200,5,.08) 0 1px,transparent 1px 24px);
 }
 .ps{font-family:'Press Start 2P',monospace;line-height:1.6}
 .wrap{max-width:860px;margin:0 auto;padding:0 16px 60px}
@@ -31,7 +31,7 @@ a{color:var(--dk)}
 .nav a:hover{color:var(--dk)}
 h1{font-family:'Press Start 2P',monospace;font-size:20px;line-height:1.6;margin-bottom:8px}
 .sub{color:var(--sub);font-size:14px;line-height:1.8;margin-bottom:30px}
-section{background:var(--panel);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:22px;margin-bottom:26px}
+section{background:var(--panel);border:2px solid var(--ink);box-shadow:6px 6px 0 #000000;padding:22px;margin-bottom:26px}
 h2{font-family:'Press Start 2P',monospace;font-size:12px;line-height:1.7;margin-bottom:14px;color:var(--dk)}
 h2.gold{color:var(--gold)}
 p,li{font-size:14px;line-height:1.85;color:var(--sub)}
@@ -55,7 +55,7 @@ footer{border-top:2px solid var(--ink);padding-top:16px;font-size:12px;color:var
       <svg width="26" height="26" viewBox="0 0 16 16" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg">
         <rect x="4" y="1" width="8" height="2" fill="#00c805"/><rect x="2" y="2" width="3" height="2" fill="#008f04"/><rect x="11" y="2" width="3" height="2" fill="#008f04"/>
         <rect x="2" y="4" width="2" height="2" fill="#008f04"/><rect x="12" y="4" width="2" height="2" fill="#008f04"/>
-        <rect x="7" y="3" width="2" height="9" fill="#0b2413"/><rect x="7" y="12" width="2" height="2" fill="#47664f"/>
+        <rect x="7" y="3" width="2" height="9" fill="#e9f7ec"/><rect x="7" y="12" width="2" height="2" fill="#47664f"/>
         <rect x="11" y="11" width="3" height="3" fill="#f5a623"/><rect x="12" y="10" width="2" height="1" fill="#f5a623"/><rect x="11" y="11" width="1" height="1" fill="#fff" opacity=".6"/>
       </svg>
       <span class="ps">LODE</span>
@@ -135,7 +135,7 @@ each winner gets: stake back + winnings × (their stake / winning-square stake)<
 
   <footer>
     LODE — a faithful port of the open-source ORE board game design (regolith-labs/ore) to Robinhood Chain. Simulated ledger — no custody, no promised returns. <a href="/mine">Back to the board &#9654;</a>
-   · <a href="https://x.com/LodeMonerRH" target="_blank" rel="noopener" aria-label="LODE on X" style="display:inline-flex;align-items:center;color:inherit"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a></footer>
+   · <a href="https://x.com/LodeMinerRH" target="_blank" rel="noopener" aria-label="LODE on X" style="display:inline-flex;align-items:center;color:inherit"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a></footer>
 </div>
 </body>
 </html>

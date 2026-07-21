@@ -10,16 +10,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f6fdf7; --panel:#fff; --ink:#0b2413; --sub:#47664f; --mut:#7d947f;
-  --grn:#00c805; --dk:#008f04; --gold:#f5a623; --red:#ff4d68;
+  --bg:#0a0f0c; --panel:#121a14; --ink:#e9f7ec; --sub:#a6c4ad; --mut:#6f8a75;
+  --grn:#00c805; --dk:#3ae57e; --gold:#f5a623; --red:#ff4d68;
 }
 *{box-sizing:border-box;margin:0;padding:0;border-radius:0}
 html,body{background:var(--bg)}
 body{
   font-family:'Inter',sans-serif;color:var(--ink);font-size:14px;
   background-image:
-    repeating-linear-gradient(0deg,rgba(0,200,5,.05) 0 1px,transparent 1px 24px),
-    repeating-linear-gradient(90deg,rgba(0,200,5,.05) 0 1px,transparent 1px 24px);
+    repeating-linear-gradient(0deg,rgba(0,200,5,.08) 0 1px,transparent 1px 24px),
+    repeating-linear-gradient(90deg,rgba(0,200,5,.08) 0 1px,transparent 1px 24px);
 }
 .ps{font-family:'Press Start 2P',monospace;line-height:1.6}
 .vt{font-family:'VT323',monospace}
@@ -35,10 +35,10 @@ a{color:var(--dk)}
 .hero{text-align:center;padding:64px 0 40px}
 .hero h1{font-family:'Press Start 2P',monospace;font-size:42px;line-height:1.3;margin:22px 0 14px;letter-spacing:2px}
 .hero .tag{font-family:'Press Start 2P',monospace;font-size:12px;line-height:2;color:var(--sub);margin-bottom:28px}
-.btn{display:inline-block;font-family:'Press Start 2P',monospace;font-size:13px;line-height:1.6;border:2px solid var(--ink);background:var(--grn);color:#fff;text-decoration:none;padding:16px 26px;box-shadow:6px 6px 0 var(--ink)}
-.btn:active{transform:translate(2px,2px);box-shadow:4px 4px 0 var(--ink)}
+.btn{display:inline-block;font-family:'Press Start 2P',monospace;font-size:13px;line-height:1.6;border:2px solid var(--ink);background:var(--grn);color:#fff;text-decoration:none;padding:16px 26px;box-shadow:6px 6px 0 #000000}
+.btn:active{transform:translate(2px,2px);box-shadow:4px 4px 0 #000000}
 .stats{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:44px}
-.stat{background:var(--panel);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);padding:12px 20px;min-width:170px}
+.stat{background:var(--panel);border:2px solid var(--ink);box-shadow:4px 4px 0 #000000;padding:12px 20px;min-width:170px}
 .stat .lab{font-family:'Press Start 2P',monospace;font-size:7px;color:var(--mut);line-height:1.6;margin-bottom:5px}
 .stat .num{font-family:'VT323',monospace;font-size:28px;line-height:1}
 .stat.gold{border-color:var(--gold)}
@@ -47,13 +47,13 @@ a{color:var(--dk)}
 .sect{margin-top:56px}
 .sect h2{font-family:'Press Start 2P',monospace;font-size:15px;line-height:1.7;margin-bottom:18px}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
-.card{background:var(--panel);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:18px}
+.card{background:var(--panel);border:2px solid var(--ink);box-shadow:6px 6px 0 #000000;padding:18px}
 .card h3{font-family:'Press Start 2P',monospace;font-size:10px;line-height:1.7;margin-bottom:10px;color:var(--dk)}
 .card h3.gold{color:var(--gold)}
 .card p{font-size:13.5px;line-height:1.75;color:var(--sub)}
 .card .big{font-family:'VT323',monospace;font-size:24px;color:var(--ink);display:block;margin-bottom:6px}
 .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
-.step{background:var(--panel);border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:18px}
+.step{background:var(--panel);border:2px solid var(--ink);box-shadow:6px 6px 0 #000000;padding:18px}
 .step .n{font-family:'Press Start 2P',monospace;font-size:18px;color:var(--grn);margin-bottom:10px}
 .step h3{font-family:'Press Start 2P',monospace;font-size:9px;line-height:1.7;margin-bottom:8px}
 .step p{font-size:13.5px;line-height:1.75;color:var(--sub)}
@@ -68,7 +68,7 @@ footer{margin-top:64px;border-top:2px solid var(--ink);padding-top:16px;font-siz
       <svg width="26" height="26" viewBox="0 0 16 16" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg">
         <rect x="4" y="1" width="8" height="2" fill="#00c805"/><rect x="2" y="2" width="3" height="2" fill="#008f04"/><rect x="11" y="2" width="3" height="2" fill="#008f04"/>
         <rect x="2" y="4" width="2" height="2" fill="#008f04"/><rect x="12" y="4" width="2" height="2" fill="#008f04"/>
-        <rect x="7" y="3" width="2" height="9" fill="#0b2413"/><rect x="7" y="12" width="2" height="2" fill="#47664f"/>
+        <rect x="7" y="3" width="2" height="9" fill="#e9f7ec"/><rect x="7" y="12" width="2" height="2" fill="#47664f"/>
         <rect x="11" y="11" width="3" height="3" fill="#f5a623"/><rect x="12" y="10" width="2" height="1" fill="#f5a623"/><rect x="11" y="11" width="1" height="1" fill="#fff" opacity=".6"/>
       </svg>
       <span class="ps">LODE</span>
@@ -80,7 +80,7 @@ footer{margin-top:64px;border-top:2px solid var(--ink);padding-top:16px;font-siz
     <svg width="96" height="96" viewBox="0 0 16 16" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg">
       <rect x="4" y="1" width="8" height="2" fill="#00c805"/><rect x="2" y="2" width="3" height="2" fill="#008f04"/><rect x="11" y="2" width="3" height="2" fill="#008f04"/>
       <rect x="2" y="4" width="2" height="2" fill="#008f04"/><rect x="12" y="4" width="2" height="2" fill="#008f04"/>
-      <rect x="7" y="3" width="2" height="9" fill="#0b2413"/><rect x="7" y="12" width="2" height="2" fill="#47664f"/>
+      <rect x="7" y="3" width="2" height="9" fill="#e9f7ec"/><rect x="7" y="12" width="2" height="2" fill="#47664f"/>
       <rect x="11" y="11" width="3" height="3" fill="#f5a623"/><rect x="12" y="10" width="2" height="1" fill="#f5a623"/><rect x="11" y="11" width="1" height="1" fill="#fff" opacity=".6"/>
     </svg>
     <h1>LODE</h1>
@@ -150,7 +150,7 @@ footer{margin-top:64px;border-top:2px solid var(--ink);padding-top:16px;font-siz
   </div>
 
   <footer>
-    Balances are a simulated ledger — every wallet starts with 0.1 ETH of play balance. No deposits, no custody, no promised returns. A faithful port of the open-source ORE board game design to Robinhood Chain.  <a href="https://x.com/LodeMonerRH" target="_blank" rel="noopener" aria-label="LODE on X" style="display:inline-flex;align-items:center;color:inherit"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a></footer>
+    Balances are a simulated ledger — every wallet starts with 0.1 ETH of play balance. No deposits, no custody, no promised returns. A faithful port of the open-source ORE board game design to Robinhood Chain.  <a href="https://x.com/LodeMinerRH" target="_blank" rel="noopener" aria-label="LODE on X" style="display:inline-flex;align-items:center;color:inherit"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a></footer>
 </div>
 <script>
 'use strict';

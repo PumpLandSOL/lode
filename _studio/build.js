@@ -11,23 +11,23 @@ const FONTS = `<link rel="preconnect" href="https://fonts.googleapis.com"><link 
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">`;
 
 const BASE = `
-:root{--bg:#f6fdf7;--panel:#fff;--ink:#0b2413;--sub:#47664f;--mut:#7d947f;--grn:#00c805;--dk:#008f04;--gold:#f5a623;--red:#ff4d68;
+:root{--bg:#0a0f0c;--panel:#121a14;--ink:#e9f7ec;--sub:#a6c4ad;--mut:#6f8a75;--grn:#00c805;--dk:#3ae57e;--gold:#f5a623;--red:#ff4d68;
   --px:'Press Start 2P',monospace;--vt:'VT323',monospace}
 *{margin:0;padding:0;box-sizing:border-box;border-radius:0}
 html,body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased}
 .stage{position:relative;overflow:hidden;background:var(--bg);background-image:
-  repeating-linear-gradient(0deg,rgba(0,200,5,.05) 0 2px,transparent 2px 48px),
-  repeating-linear-gradient(90deg,rgba(0,200,5,.05) 0 2px,transparent 2px 48px)}
+  repeating-linear-gradient(0deg,rgba(0,200,5,.08) 0 2px,transparent 2px 48px),
+  repeating-linear-gradient(90deg,rgba(0,200,5,.08) 0 2px,transparent 2px 48px)}
 .px{font-family:var(--px);font-weight:400}
 .vt{font-family:var(--vt)}
-.card{background:var(--panel);border:4px solid var(--ink);box-shadow:12px 12px 0 var(--ink)}
+.card{background:var(--panel);border:4px solid var(--ink);box-shadow:12px 12px 0 #000000}
 `;
 
 // pixel pickaxe + gold nugget — 16-cell grid rects
 function mark(size) {
   return `<svg width="${size}" height="${size}" viewBox="0 0 16 16" shape-rendering="crispEdges" style="image-rendering:pixelated" xmlns="http://www.w3.org/2000/svg">
     <g fill="#00c805"><rect x="9" y="1" width="5" height="2"/><rect x="13" y="3" width="2" height="4"/><rect x="8" y="3" width="2" height="2"/><rect x="12" y="6" width="2" height="2"/></g>
-    <g fill="#0b2413"><rect x="7" y="5" width="2" height="2"/><rect x="6" y="7" width="2" height="2"/><rect x="5" y="9" width="2" height="2"/><rect x="4" y="11" width="2" height="2"/><rect x="3" y="13" width="2" height="2"/></g>
+    <g fill="#e9f7ec"><rect x="7" y="5" width="2" height="2"/><rect x="6" y="7" width="2" height="2"/><rect x="5" y="9" width="2" height="2"/><rect x="4" y="11" width="2" height="2"/><rect x="3" y="13" width="2" height="2"/></g>
     <g fill="#f5a623"><rect x="10" y="11" width="4" height="3"/><rect x="9" y="12" width="1" height="2"/><rect x="11" y="10" width="2" height="1"/></g>
     <g fill="#c77f0e"><rect x="10" y="13" width="4" height="1"/></g>
   </svg>`;
@@ -36,7 +36,7 @@ function lockup(fontPx) {
   return `<div style="display:flex;align-items:center;justify-content:center;gap:${Math.round(fontPx * .4)}px">
     ${mark(Math.round(fontPx * 1.5))}<span class="px" style="font-size:${fontPx}px;letter-spacing:3px">LODE</span></div>`;
 }
-const chip = (t, mode) => `<span class="px" style="display:inline-flex;align-items:center;font-size:21px;line-height:1.5;color:${mode === 'g' ? '#fff' : mode === 'gold' ? '#fff' : 'var(--ink)'};background:${mode === 'g' ? 'var(--grn)' : mode === 'gold' ? 'var(--gold)' : 'var(--panel)'};border:3px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:15px 24px">${t}</span>`;
+const chip = (t, mode) => `<span class="px" style="display:inline-flex;align-items:center;font-size:21px;line-height:1.5;color:${mode === 'g' ? '#fff' : mode === 'gold' ? '#fff' : 'var(--ink)'};background:${mode === 'g' ? 'var(--grn)' : mode === 'gold' ? 'var(--gold)' : 'var(--panel)'};border:3px solid var(--ink);box-shadow:6px 6px 0 #000000;padding:15px 24px">${t}</span>`;
 
 // mini 5×5 board with a winning square
 function board(size, win, gold) {
@@ -45,7 +45,7 @@ function board(size, win, gold) {
   for (let i = 0; i < 25; i++) {
     const x = (i % 5) * cell, y = Math.floor(i / 5) * cell;
     const hot = i === win;
-    rects += `<rect x="${x}" y="${y}" width="${c}" height="${c}" fill="${hot ? (gold ? '#f5a623' : '#00c805') : '#ffffff'}" stroke="#0b2413" stroke-width="${size * .012}"/>`;
+    rects += `<rect x="${x}" y="${y}" width="${c}" height="${c}" fill="${hot ? (gold ? '#f5a623' : '#00c805') : '#121a14'}" stroke="#e9f7ec" stroke-width="${size * .012}"/>`;
   }
   return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" shape-rendering="crispEdges">${rects}</svg>`;
 }
@@ -107,7 +107,7 @@ assets['lode-keyart'] = page(2400, 1350, `
    </div>`);
 
 // 4) HOW IT WORKS 2400×1350
-const step = (n, t, d) => `<div class="card" style="flex:1;padding:40px 36px;box-shadow:8px 8px 0 var(--ink)">
+const step = (n, t, d) => `<div class="card" style="flex:1;padding:40px 36px;box-shadow:8px 8px 0 #000000">
   <div class="vt" style="font-size:58px;color:var(--grn);line-height:1">${n}</div>
   <div class="px" style="font-size:19px;line-height:1.7;margin:20px 0 14px">${t}</div>
   <div style="font-family:'Inter';font-weight:500;font-size:22px;color:var(--sub);line-height:1.65">${d}</div></div>`;
@@ -160,7 +160,7 @@ assets['lode-fair'] = page(2400, 1350, `
   .eye{font-size:16px;color:var(--dk);letter-spacing:4px;margin-bottom:26px}
   .h{font-size:46px;line-height:1.65}
   .h .g{color:var(--grn)}
-  .codebox{background:var(--ink);border:4px solid var(--ink);box-shadow:12px 12px 0 rgba(11,36,19,.25);padding:44px 52px}
+  .codebox{background:#050a06;border:4px solid var(--ink);box-shadow:12px 12px 0 rgba(11,36,19,.25);padding:44px 52px}
   .codebox .vt{font-size:34px;color:#c8f7cf;line-height:2}
   .codebox .c{color:#6fae78}
   .codebox .g{color:#7dff8a}
