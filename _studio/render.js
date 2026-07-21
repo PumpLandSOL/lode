@@ -16,6 +16,7 @@ const SIZES = {
   'lode-how': [2400, 1350],
   'lode-supply': [2400, 1350],
   'lode-fair': [2400, 1350],
+  'lode-vs': [2400, 1350],
 };
 
 const only = process.argv[2];

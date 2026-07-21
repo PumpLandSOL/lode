@@ -180,6 +180,40 @@ assets['lode-fair'] = page(2400, 1350, `
        you'd catch it in one line of code. <b>Fairness you can check, not trust.</b> · lodeminer.xyz</div>
    </div>`);
 
+// 7) VS ORE 2400×1350 — same game, fresh board
+const vrow = (k, ore, lode, hot) => `<tr>
+  <td class="k">${k}</td><td class="o">${ore}</td><td class="l${hot ? ' hot' : ''}">${lode}</td></tr>`;
+assets['lode-vs'] = page(2400, 1350, `
+  .wrap{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 130px;gap:40px}
+  .head{text-align:center}
+  .eye{font-size:16px;color:var(--dk);letter-spacing:4px;margin-bottom:24px}
+  .h{font-size:44px;line-height:1.65}
+  .h .g{color:var(--grn)}
+  table{width:100%;border-collapse:separate;border-spacing:0 12px}
+  th{font-family:var(--px);font-size:17px;text-align:left;padding:4px 26px;color:var(--mut);font-weight:400}
+  th.l{color:var(--grn)}
+  td{padding:19px 26px;font-family:'Inter';font-weight:500;font-size:23px;line-height:1.5;vertical-align:middle;background:var(--panel)}
+  td.k{width:22%;font-family:var(--px);font-size:14px;line-height:1.6;color:var(--ink);border:2px solid var(--ink);border-right:none}
+  td.o{width:36%;color:var(--mut);border:2px solid var(--ink);border-left:none;border-right:none}
+  td.l{width:42%;color:var(--ink);background:rgba(0,200,5,.08);border:2px solid var(--grn);border-left:none}
+  td.l b{color:var(--grn)}
+  td.l.hot b{color:var(--gold)}
+  .foot{font-family:var(--vt);font-size:27px;color:var(--mut);text-align:center;letter-spacing:1px}
+  .foot b{color:var(--dk);font-weight:400}`,
+  `<div class="wrap">
+     <div class="head"><div class="px eye">▲ THE PRECEDENT ▲</div>
+       <div class="px h">ORE ran to ~\$288M on Solana.<br><span class="g">LODE brings the game somewhere new.</span></div></div>
+     <table>
+       <tr><th></th><th>ORE · SOLANA</th><th class="l">LODE · ROBINHOOD CHAIN</th></tr>
+       ${vrow('THE GAME', '25 squares, 1-min rounds — the original', '<b>The same proven game</b> — faithful mechanics, square for square')}
+       ${vrow('THE ARENA', 'Solana — crowded, mature, priced in', '<b>First mining game on the chain</b> — an empty board')}
+       ${vrow('FAIRNESS', 'On-chain entropy', '<b>Commit-reveal</b> — verify every round yourself in one line')}
+       ${vrow('SUPPLY', '5,000,000 hard cap', '5,000,000 hard cap — <b>same discipline, zero premine</b>')}
+       ${vrow('ATH', '~\$288M', '<b>unwritten</b> — the board just opened', true)}
+     </table>
+     <div class="foot">same game. fresh chain. <b>lodeminer.xyz · \$LODE</b></div>
+   </div>`);
+
 for (const [name, html] of Object.entries(assets)) {
   fs.writeFileSync(path.join(OUT, name + '.html'), html);
   console.log('wrote', name + '.html');
