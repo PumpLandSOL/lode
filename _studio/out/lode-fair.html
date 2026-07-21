@@ -1,0 +1,38 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+:root{--bg:#f6fdf7;--panel:#fff;--ink:#0b2413;--sub:#47664f;--mut:#7d947f;--grn:#00c805;--dk:#008f04;--gold:#f5a623;--red:#ff4d68;
+  --px:'Press Start 2P',monospace;--vt:'VT323',monospace}
+*{margin:0;padding:0;box-sizing:border-box;border-radius:0}
+html,body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--bg);overflow:hidden;-webkit-font-smoothing:antialiased}
+.stage{position:relative;overflow:hidden;background:var(--bg);background-image:
+  repeating-linear-gradient(0deg,rgba(0,200,5,.05) 0 2px,transparent 2px 48px),
+  repeating-linear-gradient(90deg,rgba(0,200,5,.05) 0 2px,transparent 2px 48px)}
+.px{font-family:var(--px);font-weight:400}
+.vt{font-family:var(--vt)}
+.card{background:var(--panel);border:4px solid var(--ink);box-shadow:12px 12px 0 var(--ink)}
+
+  .stage{width:2400px;height:1350px}
+  .wrap{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 130px;gap:46px}
+  .head{text-align:center}
+  .eye{font-size:16px;color:var(--dk);letter-spacing:4px;margin-bottom:26px}
+  .h{font-size:46px;line-height:1.65}
+  .h .g{color:var(--grn)}
+  .codebox{background:var(--ink);border:4px solid var(--ink);box-shadow:12px 12px 0 rgba(11,36,19,.25);padding:44px 52px}
+  .codebox .vt{font-size:34px;color:#c8f7cf;line-height:2}
+  .codebox .c{color:#6fae78}
+  .codebox .g{color:#7dff8a}
+  .foot{font-family:'Inter';font-weight:600;font-size:26px;color:var(--sub);text-align:center;line-height:1.65;max-width:1500px;margin:0 auto}
+  .foot b{color:var(--ink)}</style></head>
+  <body><div class="stage"><div class="wrap">
+     <div class="head"><div class="px eye">▲ PROVABLY FAIR ▲</div>
+       <div class="px h">The house <span class="g">can't re-roll.</span></div></div>
+     <div class="codebox">
+       <div class="vt"><span class="c">// before the round opens, the secret is committed:</span></div>
+       <div class="vt">commitment = <span class="g">sha256(secret)</span>          <span class="c">// published to every miner</span></div>
+       <div class="vt"><span class="c">// at resolution, the secret is revealed. verify it yourself:</span></div>
+       <div class="vt">rng = <span class="g">sha256(secret + ':' + roundId)</span></div>
+       <div class="vt">winning_square = rng % 25   <span class="c">// same digest drives the 1-in-500 motherlode roll</span></div>
+     </div>
+     <div class="foot">Every resolved round publishes its secret next to its commitment. If they ever didn't match,
+       you'd catch it in one line of code. <b>Fairness you can check, not trust.</b> · lodeminer.xyz</div>
+   </div></div></body></html>
